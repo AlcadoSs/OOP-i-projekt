@@ -47,8 +47,8 @@ public class ToDoList {
 
             //Valikud
             System.out.println("VALIKUD:");
-            System.out.println("Lisa uus tegevus");
-            System.out.println("Sulge");
+            System.out.println("Lisa uus tegevus - 1");
+            System.out.println("Sulge - 0");
             System.out.print("Sisesta oma valik: ");
 
             try {
