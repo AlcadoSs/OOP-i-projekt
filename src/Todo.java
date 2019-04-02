@@ -2,12 +2,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class ToDoList {
+public class Todo implements java.io.Serializable {
 
     private String listiNimi;
     private List<String> listTegevustest;
 
-    public ToDoList() {
+    public Todo() {
         this.listTegevustest = new ArrayList<>();
         this.listiNimi = "TODO:";
     }//Konstruktor
@@ -42,7 +42,7 @@ public class ToDoList {
 
     public static void main(String[] args) {
         Scanner kasutajaSisend = new Scanner(System.in);
-        ToDoList todo = new ToDoList();
+        Todo todo = new Todo();
 
         String nimi;
         System.out.println("Sisesta, millist nime oma listile soovid:");
@@ -57,9 +57,9 @@ public class ToDoList {
 
             //Valikud
             System.out.println("VALIKUD:");
-            System.out.println("Lisa uus tegevus - 1");
-            System.out.println("Eemalda - 2");
-            System.out.println("Sulge - 0");
+            System.out.println("1 - Lisa uus tegevus");
+            System.out.println("2 - Eemalda kindel element");
+            System.out.println("0 - Sulge");
             System.out.print("Sisesta oma valik: ");
 
             try {
@@ -81,8 +81,18 @@ public class ToDoList {
                             System.out.println();
                             System.out.println("Eemaldatud: " + eemaldatud);
                         } else {
+                            System.out.println();
                             System.out.println("Sellise indeksiga rida ei leitud " + i + ".");
                         }
+                        break;
+
+                    case 0:
+                        System.out.println();
+                        break;
+
+                    default:
+                        System.out.println();
+                        System.out.println(valik + ", sellist valikut ei ole, proovi uuesti.");
                         break;
                 }
             }catch (java.util.InputMismatchException ime){
@@ -91,4 +101,4 @@ public class ToDoList {
             }
         }
     }
-}//ToDoList
+}//To-do
