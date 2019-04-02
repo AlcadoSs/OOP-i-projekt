@@ -4,22 +4,27 @@ import java.util.Scanner;
 
 public class Todo implements java.io.Serializable {
 
+    //Isendiväli String listiNimi to-do listi nime jaoks, List<String> listTegevustest hoiab endas listi tegevustest
     private String listiNimi;
     private List<String> listTegevustest;
 
+    //Konstruktor, mis annab isendiväljadele algsed väärtused
     public Todo() {
         this.listTegevustest = new ArrayList<>();
         this.listiNimi = "TODO:";
     }//Konstruktor
 
+    //Setter, millega on võimalik muutujat listiNime muuta
     public void setListiNimi(String listiNimi) {
         this.listiNimi = listiNimi;
     }//Setter listiNimi
 
+    //Meetod, millega on võimalik listi uusi tegevusi lisada
     public void lisaTegevus(String tegevus){
         listTegevustest.add(tegevus);
     }//lisaTegevus
 
+    //Meetod, millega on võimalik listist kindel tegevus eemaldada
     public String eemaldaTegevus(int i) {
         if (i < 1 || i > listTegevustest.size()) {
             return null;
@@ -31,6 +36,7 @@ public class Todo implements java.io.Serializable {
         }
     }//eemaldaTegevus
 
+    //toString, mis annab to-do listile kuju
     @Override
     public String toString() {
         StringBuilder todo = new StringBuilder(listiNimi + "\n");
@@ -100,5 +106,5 @@ public class Todo implements java.io.Serializable {
                 kasutajaSisend.nextLine();
             }
         }
-    }
+    }//main
 }//To-do
