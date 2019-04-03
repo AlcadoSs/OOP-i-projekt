@@ -3,9 +3,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+//java.io.Serializable on objekti faili kirjutamiseks
 public class Todo implements java.io.Serializable {
 
-    //Isendiväli String listiNimi to-do listi nime jaoks, List<String> listTegevustest hoiab endas listi tegevustest
+    //Isendiväljad String listiNimi to-do listi nime jaoks ja List<String> listTegevustest hoiab endas listi tegevustest
     private String listiNimi;
     private List<String> listTegevustest;
 
@@ -23,6 +24,14 @@ public class Todo implements java.io.Serializable {
     public String getListiNimi() {
         return listiNimi;
     }//Getter listiNimi
+
+    public List<String> getListTegevustest() {
+        return listTegevustest;
+    }//Getter ListTegevustest
+
+    public void setListTegevustest(List<String> listTegevustest) {
+        this.listTegevustest = listTegevustest;
+    }//Setter ListTegevustest
 
     //Meetod, millega on võimalik listi uusi tegevusi lisada
     public void lisaTegevus(String tegevus){
@@ -51,17 +60,21 @@ public class Todo implements java.io.Serializable {
         return todo.toString();
     }
 
-
     public static void main(String[] args) {
         Scanner kasutajaSisend = new Scanner(System.in);
         Todo todo = new Todo();
 
         boolean algus = true;
         while(algus) {
-            System.out.println("Kas soovid avada olemasoleva to-do listi või luua uue? Kirjutada vastavalt 'olemasolev' või 'uus'");
+            System.out.println("Tere tulemast! Selle programmi abil on sul võiamoik kirjutada omale to-do listi.");
+            System.out.println("Pärast programmi sulgemist loob programm kaks faili, üks on selleks, et soovi korral oleks võimalik oma to-do listi jätkata");
+            System.out.println("ja teine on tavaline tekstifail selleks, et oma to-do listi hiljem vaadata.");
+            System.out.println();
+            System.out.println("Kas soovid avada olemasoleva to-do listi või luua uue?");
+            System.out.println("Kirjutada vastavalt 'olemasolev'('o') või 'uus'('u').");
             String algusValik = kasutajaSisend.nextLine();
-            if(algusValik.equals("olemasolev")){
-                System.out.println("Sisestage to-do listi nimi, mida soovite avada.");
+            if(algusValik.toLowerCase().equals("olemasolev") || algusValik.toLowerCase().equals("o")){
+                System.out.println("Sisesta to-do listi nimi, mida soovite avada vormis nimi.txt.");
                 String failinimi = kasutajaSisend.nextLine();
                 //Olemasoleva faili avamine
                 try {
@@ -73,7 +86,7 @@ public class Todo implements java.io.Serializable {
                 } catch (IOException | ClassNotFoundException e) {
                     System.out.println("Mingi viga, proovi uuesti!");
                 }
-            } else if(algusValik.equals("uus")) {
+            } else if(algusValik.toLowerCase().equals("uus") || algusValik.toLowerCase().equals("u")) {
                 String nimi;
                 todo = new Todo();
                 System.out.println("Sisesta, millist nime oma listile soovid:");
@@ -141,6 +154,13 @@ public class Todo implements java.io.Serializable {
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(todo);
             oos.close();
+
+            //Loob tavalise loetava teksti faili to-do listist
+            FileWriter writer = new FileWriter(todo.getListiNimi() + "-loetav.txt");
+            for(String rida: todo.getListTegevustest()) {
+                writer.write(rida + "\n");
+            }
+            writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
