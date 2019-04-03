@@ -1,3 +1,4 @@
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -18,6 +19,10 @@ public class Todo implements java.io.Serializable {
     public void setListiNimi(String listiNimi) {
         this.listiNimi = listiNimi;
     }//Setter listiNimi
+
+    public String getListiNimi() {
+        return listiNimi;
+    }//Getter listiNimi
 
     //Meetod, millega on võimalik listi uusi tegevusi lisada
     public void lisaTegevus(String tegevus){
@@ -46,14 +51,37 @@ public class Todo implements java.io.Serializable {
         return todo.toString();
     }
 
+
     public static void main(String[] args) {
         Scanner kasutajaSisend = new Scanner(System.in);
         Todo todo = new Todo();
 
-        String nimi;
-        System.out.println("Sisesta, millist nime oma listile soovid:");
-        nimi = kasutajaSisend.nextLine();
-        todo.setListiNimi(nimi);
+        boolean algus = true;
+        while(algus) {
+            System.out.println("Kas soovid avada olemasoleva to-do listi või luua uue? Kirjutada vastavalt 'olemasolev' või 'uus'");
+            String algusValik = kasutajaSisend.nextLine();
+            if(algusValik.equals("olemasolev")){
+                System.out.println("Sisestage to-do listi nimi, mida soovite avada.");
+                String failinimi = kasutajaSisend.nextLine();
+                //Olemasoleva faili avamine
+                try {
+                    FileInputStream fis = new FileInputStream(failinimi);
+                    ObjectInputStream ois = new ObjectInputStream(fis);
+                    todo = (Todo) ois.readObject();
+                    ois.close();
+                    algus = false;
+                } catch (IOException | ClassNotFoundException e) {
+                    System.out.println("Mingi viga, proovi uuesti!");
+                }
+            } else if(algusValik.equals("uus")) {
+                String nimi;
+                todo = new Todo();
+                System.out.println("Sisesta, millist nime oma listile soovid:");
+                nimi = kasutajaSisend.nextLine();
+                todo.setListiNimi(nimi);
+                algus = false;
+            }
+        }//esimene while tsükkel mainis
 
         int valik = 1;
         while(valik != 0) {
@@ -105,6 +133,16 @@ public class Todo implements java.io.Serializable {
                 System.out.println("Sisesta number palun.");
                 kasutajaSisend.nextLine();
             }
+        }//teine while tsükkel mainis
+
+        try {
+            //Loob to-do listiga sama nimega faili, kus hoiab infot objekti kohta
+            FileOutputStream fos = new FileOutputStream(todo.getListiNimi() + ".txt");
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(todo);
+            oos.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }//main
 }//To-do
