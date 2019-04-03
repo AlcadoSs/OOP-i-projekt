@@ -64,12 +64,13 @@ public class Todo implements java.io.Serializable {
         Scanner kasutajaSisend = new Scanner(System.in);
         Todo todo = new Todo();
 
+        System.out.println("Tere tulemast! Selle programmi abil on sul võiamoik kirjutada omale to-do listi.");
+        System.out.println("Pärast programmi sulgemist loob programm kaks faili, üks on selleks, et soovi korral oleks võimalik oma to-do listi jätkata");
+        System.out.println("ja teine on tavaline tekstifail selleks, et oma to-do listi hiljem vaadata.");
+        System.out.println();
+
         boolean algus = true;
         while(algus) {
-            System.out.println("Tere tulemast! Selle programmi abil on sul võiamoik kirjutada omale to-do listi.");
-            System.out.println("Pärast programmi sulgemist loob programm kaks faili, üks on selleks, et soovi korral oleks võimalik oma to-do listi jätkata");
-            System.out.println("ja teine on tavaline tekstifail selleks, et oma to-do listi hiljem vaadata.");
-            System.out.println();
             System.out.println("Kas soovid avada olemasoleva to-do listi või luua uue?");
             System.out.println("Kirjutada vastavalt 'olemasolev'('o') või 'uus'('u').");
             String algusValik = kasutajaSisend.nextLine();
