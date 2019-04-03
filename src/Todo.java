@@ -134,7 +134,7 @@ public class Todo implements java.io.Serializable {
                         break;
 
                     case 0:
-                        System.out.println();
+                        System.out.println("Aitäh, et kasutasid meie programmi. Tehtud to-do listi näete failist nimi-loetav.txt.");
                         break;
 
                     default:
